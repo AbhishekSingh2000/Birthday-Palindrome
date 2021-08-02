@@ -40,3 +40,15 @@ body{
     font-size: 20px;
     font-weight: bolder;
 }
+
+.heading{
+    background-color: white;
+    margin: 0%;
+    border:1px solid black;
+}
+
+.giffy{
+    width: 5rem;
+    height: 5rem;
+    display: none;
+}

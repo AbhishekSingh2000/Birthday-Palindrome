@@ -1,6 +1,14 @@
 var input1 = document.querySelector("#inArea1");
 var buttoncheck = document.querySelector("#btnc");
 var output = document.querySelector(".otpt");
+var gif = document.querySelector(".giffy");
+
+
+function callGif(){
+    if(gif.style.display="none"){
+        gif.style.display="block";
+    }
+}
 
 function enterCheck(){
     var bDate=input1.value;
@@ -123,9 +131,9 @@ function nearestPbDatebackward(dDate){
         if(mb<10){
             mb="0"+mb;
         } 
-        output.innerHTML=`The nearest palindrome date to your birthday is <br> ${db}-${mb}-${yb},<br> Ahhh! you missed it by ${Math.abs(forDated)} days`;
+        output.innerHTML=`Sorry, Your Birthday is not a palindrome date but the nearest palindrome date to your birthday is <br> ${db}-${mb}-${yb},<br> Ahhh! you missed it by ${Math.abs(forDated)} days`;
      }
-     else if(forDated===backDated){
+      if(forDated===backDated){
         output.innerHTML=`Congratulations! Your Birthday is a Palindrome Date i.e.,<br> ${bDate.split("-").reverse().join("-")}`;
      }
      else if(forDated<backDated){
@@ -158,7 +166,9 @@ function nearestPbDatebackward(dDate){
     }
      
    }
-
+  if(gif.style.display="block"){
+    gif.style.display="none";
+  }
 }
 
 buttoncheck.addEventListener("click", enterCheck);
