@@ -4,33 +4,35 @@ var output = document.querySelector(".otpt");
 var gif = document.querySelector(".giffy");
 
 
-function callGif(){
+/*function callGif(){
     if(gif.style.display="none"){
         gif.style.display="block";
     }
-}
+}*/
+
 
 function enterCheck(){
-    var bDate=input1.value;
+    var date= input1.value;
+    console.log(date);
 
-    if(bDate==""){
+    if(date==""||date=="0"){
         output.innerText="Please enter an appropriate Date";
     }
     else{
-        var cDate=new Date(bDate);
-        var dDate=new Date(bDate);
-        nearestPbDate(cDate,dDate);
+        var fDate=new Date(date);
+        var bDate=new Date(date);
+
+        nearestPDateforward(fDate);
+        nearestPDatebackward(bDate);
     }
 
-  function nearestPbDate(cDate,dDate){
-    nearestPbDateforward(cDate);
-    nearestPbDatebackward(dDate);
-    }
-    
-    function nearestPbDateforward(cDate){
-        var yyyy=cDate.getFullYear();
-        var mm=cDate.getMonth()+1;
-        var dd=cDate.getDate();
+        function nearestPDateforward(fDate){
+        var dd= fDate.getDate();
+        var mm= fDate.getMonth()+1;
+        var yyyy= fDate.getFullYear();
+
+        console.log(dd,mm,yyyy);
+
         if (dd<10){
             dd="0"+dd;
         }
@@ -39,122 +41,113 @@ function enterCheck(){
             mm="0"+mm;
         }
 
-        if(yyyy>=2001||yyyy<=2113){
-        dd=yyyy.toString().substr(-2).split("").reverse().join("");
-        mm=yyyy.toString().split("").reverse().join("").substr(-2);
-        if(dd>31||dd==00){
-            yyyy=yyyy+1;
-            cDate.setFullYear(yyyy);
-            nearestPbDateforward(cDate);
+        if(yyyy>=2000 && yyyy<=2113){
+            dd=yyyy.toString().substr(-2).split("").reverse().join("");
+            mm=yyyy.toString().split("").reverse().join("").substr(-2);
+            
+            if(dd>31||dd==0){
+                yyyy=yyyy+1;
+                fDate.setFullYear(yyyy);
+                nearestPDateforward(fDate);  
+            }
+            else if((dd==31||dd==30) && mm==2){
+                yyyy=yyyy+1;
+                cDate.setFullYear(yyyy);
+                nearestPDateforward(fDate);
+            }
+            else{
+                fDate.setFullYear(yyyy);
+                fDate.setMonth(mm-1);
+                fDate.setDate(dd);
+            }
         }
-        else if((dd==31||dd==30)&&(mm==02)){
-            yyyy=yyyy-1;
-            cDate.setFullYear(yyyy);
-            nearestPbDateforward(cDate);
+
+        else if(yyyy<2000){
+            output.innerHTML="Your Birthday is not a palindrome dates but the nearest palindrome date to your birthday is 10-02-2001";
         }
-        else{
-        cDate.setFullYear(yyyy);
-        cDate.setMonth(mm-1);
-        cDate.setDate(dd);
+      }
+
+
+      function nearestPDatebackward(bDate){
+        var dd= bDate.getDate();
+        var mm= bDate.getMonth()+1;
+        var yyyy= bDate.getFullYear();
+
+        console.log(dd,mm,yyyy);
+
+        if (dd<10){
+            dd="0"+dd;
         }
-    }
-        console.log("for ",cDate);
-  } 
+    
+        if(mm<10){
+            mm="0"+mm;
+        }
 
+        if(yyyy>=1900 && yyyy<=2113){
+            dd=yyyy.toString().substr(-2).split("").reverse().join("");
+            mm=yyyy.toString().split("").reverse().join("").substr(-2);
+            
+            if(dd>31||dd==0){
+                yyyy=yyyy-1;
+                bDate.setFullYear(yyyy);
+                nearestPDatebackward(bDate);  
+            }
+            else if((dd==31||dd==30) && mm==2){
+                yyyy=yyyy-1;
+                bDate.setFullYear(yyyy);
+                nearestPDatebackward(bDate);
+            }
+            else{
+                bDate.setFullYear(yyyy);
+                bDate.setMonth(mm-1);
+                bDate.setDate(dd);
+            }
+        }
+        else if(yyyy<2000){
+            output.innerHTML="Your Birthday is not a palindrome dates but the nearest palindrome date to your birthday is 10-02-2001";
+        }
+      }
 
+      console.log("final fdate", fDate);
+      console.log("final bdate", bDate);
 
-function nearestPbDatebackward(dDate){
-    var yyyy=dDate.getFullYear();
-    var mm=dDate.getMonth()+1;
-    var dd=dDate.getDate();
-    if (dd<10){
-        dd="0"+dd;
-    }
+      absDate(fDate,bDate);
 
-    if(mm<10){
-        mm="0"+mm;
-    }
-
-    if(yyyy<=2000){
-       output.innerHTML="Your century doesn't consist any Palindrome dates so the nearest palindrome dates to your birthday are in 21St century only.";
-    }
-    if(yyyy>=2001||yyyy<=2113){
-    dd=yyyy.toString().substr(-2).split("").reverse().join("");
-    mm=yyyy.toString().split("").reverse().join("").substr(-2);
-    if(dd>31){
-        yyyy=yyyy-1;
-        dDate.setFullYear(yyyy);
-        nearestPbDatebackward(dDate);
-    }
-    else if((dd==31||dd==30)&&(mm==02)){
-        yyyy=yyyy-1;
-        dDate.setFullYear(yyyy);
-        nearestPbDatebackward(dDate);
-    }
-    else{
-    dDate.setFullYear(yyyy);
-    dDate.setMonth(mm-1);
-    dDate.setDate(dd);
-    }
-  }
-    dDate.setMonth(mm-1);
-    console.log("back",dDate);
- }
-
-    console.log("final forward date is:", cDate);
-    console.log("final backward date is:", dDate);
-
-
-    absDate(cDate,dDate);
-    function absDate(cDate,dDate){
+    function absDate(fDate,bDate){
     //var date=input1.value;
-     console.log(cDate.getTime()); 
-     console.log(dDate.getTime()); 
-     var forDatems= new Date(cDate).getTime() - new Date(bDate).getTime();
+     console.log(fDate.getTime()); 
+     console.log(bDate.getTime()); 
+     var forDatems= new Date(fDate).getTime() - new Date(date).getTime();
      var forDated= forDatems/86400000;
-     var backDatems= new Date(bDate).getTime() - new Date(dDate).getTime();
+     var backDatems= new Date(date).getTime() - new Date(bDate).getTime();
      var backDated= backDatems/86400000;
 
-     console.log(forDatems,"   ", forDated);
-     console.log(backDatems,"   ", backDated);
-
-     //var tb=new Date(date).getFullYear();
-
-     if(forDated<3650){
-         var db=cDate.getDate();
-         var mb=cDate.getMonth()+1;
-         var yb=cDate.getFullYear();
-         if (db<10){
-            db="0"+db;
-        }
-    
-        if(mb<10){
-            mb="0"+mb;
-        } 
-        output.innerHTML=`Sorry, Your Birthday is not a palindrome date but the nearest palindrome date to your birthday is <br> ${db}-${mb}-${yb},<br> Ahhh! you missed it by ${Math.abs(forDated)} days`;
+     if(forDated===backDated){
+        output.innerHTML=`Congratulations! Your Birthday is a Palindrome Date i.e.,<br> ${date.split("-").reverse().join("-")}`;
      }
-      if(forDated===backDated){
-        output.innerHTML=`Congratulations! Your Birthday is a Palindrome Date i.e.,<br> ${bDate.split("-").reverse().join("-")}`;
+
+     else if(fDate.getFullYear<2000||bDate.getFullYear<2000){
+        output.innerHTML="Your Birthday is not a palindrome dates but the nearest palindrome date to your birthday is 10-02-2001";  
      }
+
      else if(forDated<backDated){
-         var dc=cDate.getDate();
-         var mc=cDate.getMonth()+1;
-         var yc=cDate.getFullYear();
-         if (dc<10){
-            dc="0"+dc;
-        }
-    
-        if(mc<10){
-            mc="0"+mc;
-        }
-         output.innerHTML=`Sorry, Your Birthday is not a palindrome date but the nearest palindrome date to your birthday is: <br> ${dc}-${mc}-${yc}, <br> Ahhh! you missed it by  <br> ${Math.abs(forDated)} days`;
-     }
+        var dc=fDate.getDate();
+        var mc=fDate.getMonth()+1;
+        var yc=fDate.getFullYear();
+        if (dc<10){
+           dc="0"+dc;
+       }
+   
+       if(mc<10){
+           mc="0"+mc;
+       }
+        output.innerHTML=`Sorry, Your Birthday is not a palindrome date but the nearest palindrome date to your birthday is: <br> ${dc}-${mc}-${yc}, <br> Ahhh! you missed it by  <br> ${Math.abs(forDated)} days`;
+    }
 
-
-    else if(forDated>backDated){
-        var dd=dDate.getDate();
-        var md=dDate.getMonth()+1;
-        var yd=dDate.getFullYear();
+    else if(backDated<forDated){
+        var dd=bDate.getDate();
+        var md=bDate.getMonth()+1;
+        var yd=bDate.getFullYear();
         if (dd<10){
            dd="0"+dd;
        }
@@ -164,11 +157,11 @@ function nearestPbDatebackward(dDate){
        }
         output.innerHTML=`Sorry, Your Birthday is not a palindrome date but the nearest palindrome date to your birthday is: <br> ${dd}-${md}-${yd},<br> Ahhh! you missed it by <br> ${Math.abs(backDated)} days`;
     }
-     
-   }
-  if(gif.style.display="block"){
-    gif.style.display="none";
-  }
+    
+    
+    }
+
+
 }
 
 buttoncheck.addEventListener("click", enterCheck);
