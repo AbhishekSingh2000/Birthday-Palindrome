@@ -5,7 +5,7 @@
 }
 
 body{
-    background-size: 100%;
+    background-image: url("birthday.jpg");
 }
 
 .subject{
@@ -45,10 +45,12 @@ body{
     background-color: white;
     margin: 0%;
     border:1px solid black;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .giffy{
-    width: 5rem;
+    width: 32rem;
     height: 5rem;
     display: none;
 }

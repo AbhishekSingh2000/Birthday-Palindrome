@@ -12,6 +12,22 @@ var gif = document.querySelector(".giffy");
 
 
 function enterCheck(){
+
+    gif.style.display="block";
+
+    function callGif(){
+        gif.style.display="none";  
+    }
+    setTimeout(callGif, 2500);
+
+    output.style.display="none";
+
+    function calloutput(){
+        output.style.display="block";  
+    }
+    setTimeout(calloutput, 2500);
+
+
     var date= input1.value;
     console.log(date);
 
